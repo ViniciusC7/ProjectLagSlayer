@@ -7,7 +7,7 @@ import platform
 import subprocess
 import sys
 
-# Função para detectar a interface ativa
+
 def get_active_interface():
     interfaces = ["Ethernet", "Ethernet 2", "Conexao Local"]
     for interface in interfaces:
@@ -16,7 +16,7 @@ def get_active_interface():
             return interface
     return None
 
-# Obter a interface ativa e verificar a conexão
+
 interface_name = get_active_interface()
 if not interface_name:
     print("Nenhuma interface ativa encontrada. Verifique as conexoes de rede e tente novamente.")
@@ -24,7 +24,7 @@ if not interface_name:
 else:
     print(f"Usando a interface ativa: {interface_name}")
 
-# Função para aplicar configurações otimizadas de DNS e MTU
+# Configurações otimizadas de DNS e MTU
 def apply_optimized_settings():
     try:
         dns_command = f'netsh interface ip set dns name="{interface_name}" source=static addr=8.8.8.8'
@@ -42,7 +42,7 @@ def apply_optimized_settings():
     except Exception as e:
         print("⚠️ Erro ao aplicar configurações otimizadas:", e)
 
-# Função para restaurar as configurações originais de DNS e MTU
+# Restaura as configurações originais de DNS e MTU
 def restore_original_settings():
     try:
         dns_restore_command = f'netsh interface ip set dns name="{interface_name}" source=dhcp'
@@ -64,11 +64,12 @@ def restore_original_settings():
 def show_menu():
     while True:
         print("\n================= Project LagSlayer =================")
-        print("Escolha uma opção:")
-        print("1️  Otimizar Configurações de Rede")
-        print("2️  Restaurar Configurações Originais")
-        print("3️  Sair")
-        print("=====================================================")
+        print(" Escolha uma opção:                                    |")
+        print("                                                       |")
+        print("1️ Otimizar Configurações de Rede                      |")
+        print("2️ Restaurar Configurações Originais                   |")
+        print("3️ Sair                                                |")
+        print("=======================================================")
 
         choice = input("Digite o número da opção desejada: ")
 
