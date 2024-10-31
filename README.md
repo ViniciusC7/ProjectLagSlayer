@@ -18,3 +18,7 @@
 1. **Otimização:** Define o DNS para 8.8.8.8 e o MTU para 1500, valores que podem reduzir a latência em algumas redes.
 
 1. **Restauração:** Caso deseje reverter as alterações, o programa restaura as configurações salvas no backup inicial.
+
+
+> ###  Aviso
+> Este programa modifica configurações de rede. Recomenda-se o uso apenas para quem entende os efeitos das alterações no DNS e MTU.
