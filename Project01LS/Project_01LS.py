@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 
+# Funções para obter a interface ativa e verificar configurações
 def get_active_interface():
     interfaces = ["Ethernet", "Ethernet 2", "Conexao Local"]
     for interface in interfaces:
@@ -16,50 +17,47 @@ def get_active_interface():
             return interface
     return None
 
+def show_current_settings():
+    # Exibe o DNS e o MTU da interface ativa
+    print("\nConfigurações atuais da interface:")
+    dns_info = subprocess.run(f'netsh interface ip show config name="{interface_name}"', shell=True, capture_output=True, text=True)
+    mtu_info = subprocess.run("netsh interface ipv4 show subinterface", shell=True, capture_output=True, text=True)
+    print(dns_info.stdout)
+    print(mtu_info.stdout)
 
+# Obter a interface ativa e verificar a conexão
 interface_name = get_active_interface()
 if not interface_name:
-    print("Nenhuma interface ativa encontrada. Verifique as conexoes de rede e tente novamente.")
+    print("Nenhuma interface ativa encontrada. Verifique as conexões de rede e tente novamente.")
     sys.exit(1)
 else:
     print(f"Usando a interface ativa: {interface_name}")
 
-# Configurações otimizadas de DNS e MTU
+# Função para aplicar configurações otimizadas de DNS e MTU
 def apply_optimized_settings():
     try:
         dns_command = f'netsh interface ip set dns name="{interface_name}" source=static addr=8.8.8.8'
         mtu_command = f'netsh interface ipv4 set subinterface "{interface_name}" mtu=1500 store=persistent'
 
-        dns_result = subprocess.run(dns_command, shell=True, capture_output=True, text=True)
-        mtu_result = subprocess.run(mtu_command, shell=True, capture_output=True, text=True)
-
-        if dns_result.returncode != 0:
-            print("Erro ao configurar o DNS:", dns_result.stderr)
-        elif mtu_result.returncode != 0:
-            print("Erro ao configurar o MTU:", mtu_result.stderr)
-        else:
-            print("✅ Configurações de rede otimizadas com sucesso.")
+        subprocess.run(dns_command, shell=True)
+        subprocess.run(mtu_command, shell=True)
+        print("✅ Configurações de rede otimizadas com sucesso.")
+        show_current_settings()
     except Exception as e:
         print("⚠️ Erro ao aplicar configurações otimizadas:", e)
 
-# Restaura as configurações originais de DNS e MTU
+# Função para restaurar as configurações originais de DNS e MTU
 def restore_original_settings():
     try:
         dns_restore_command = f'netsh interface ip set dns name="{interface_name}" source=dhcp'
         mtu_restore_command = f'netsh interface ipv4 set subinterface "{interface_name}" mtu=automatic store=persistent'
 
-        dns_restore_result = subprocess.run(dns_restore_command, shell=True, capture_output=True, text=True)
-        mtu_restore_result = subprocess.run(mtu_restore_command, shell=True, capture_output=True, text=True)
-
-        if dns_restore_result.returncode != 0:
-            print("Erro ao restaurar o DNS:", dns_restore_result.stderr)
-        elif mtu_restore_result.returncode != 0:
-            print("Erro ao restaurar o MTU:", mtu_restore_result.stderr)
-        else:
-            print("✅ Configurações de rede restauradas com sucesso.")
+        subprocess.run(dns_restore_command, shell=True)
+        subprocess.run(mtu_restore_command, shell=True)
+        print("✅ Configurações de rede restauradas com sucesso.")
+        show_current_settings()
     except Exception as e:
         print("⚠️ Erro ao restaurar configurações originais:", e)
-
 
 def show_menu():
     while True:
@@ -86,3 +84,4 @@ def show_menu():
             print("\n❌ Opção inválida! Por favor, escolha uma opção válida (1, 2 ou 3).")
 
 show_menu()
+
