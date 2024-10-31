@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Project 01LS", "Project 01LS\Project 01LS.pyproj", "{11DBA322-3674-4777-8D1D-050333F9FDE4}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Project LagSlayer", "Project 01LS\Project LagSlayer.pyproj", "{11DBA322-3674-4777-8D1D-050333F9FDE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
